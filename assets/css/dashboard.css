@@ -198,9 +198,7 @@
 .mmcl-chip--todo { color: var(--mmcl-copihue); background: #f6e3e5; }
 .mmcl-chip--tbc { color: #7f5615; background: #f5ead6; }
 .mmcl-chip--important { color: var(--mmcl-white); background: var(--mmcl-copihue); }
-.mmcl-ev.is-important .mmcl-ev__title { color: var(--mmcl-copihue); }
 .mmcl-ev--task.is-done .mmcl-ev__title > span { color: var(--mmcl-muted); text-decoration: line-through; text-decoration-color: rgba(80,90,107,.45); }
-.mmcl-ev--task.is-done .mmcl-ev__icon { color: var(--mmcl-araucaria); }
 .mmcl-ev__meta .mmcl-tick { min-height: 0; padding: .1em .55em .1em .3em; }
 
 .mmcl .mmcl-link-btn { background: none; border: 0; padding: .1em .2em; font-size: var(--mmcl-t2); color: var(--mmcl-glaciar); text-decoration: underline; text-underline-offset: .2em; }

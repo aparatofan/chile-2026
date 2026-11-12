@@ -103,7 +103,6 @@
 			car: '<path d="M4 16.5V12l2-5h12l2 5v4.5M4 16.5h16M3 12h18"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/>',
 			transfer: '<path d="M3 8h14l-3-3M21 16H7l3 3"/>',
 			info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
-			task: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5.5"/>',
 			free: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
 			star: '<path d="M12 2l2.6 4.2 4.5-1.3-1.3 4.5L22 12l-4.2 2.6 1.3 4.5-4.5-1.3L12 22l-2.6-4.2-4.5 1.3 1.3-4.5L2 12l4.2-2.6-1.3-4.5 4.5 1.3z"/>',
 			gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
@@ -112,7 +111,10 @@
 		function icon( name, cls ) {
 			return '<svg class="' + ( cls || '' ) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ( IC[ name ] || IC.info ) + '</svg>';
 		}
-		function evIcon( e ) { return icon( e.id === 'stargazing' ? 'star' : e.type, 'mmcl-ev__icon' ); }
+		function evIcon( e ) {
+			if ( e.type === 'task' ) { return ''; } // Tasks have no icon: the Zrobione button says enough.
+			return icon( e.id === 'stargazing' ? 'star' : e.type, 'mmcl-ev__icon' );
+		}
 		function tickSvg() {
 			return '<svg viewBox="0 0 20 20" aria-hidden="true"><rect class="box" x="1.5" y="1.5" width="17" height="17" rx="3"/><path class="mark" d="M5.5 10.5l3 3 6-7"/></svg>';
 		}
