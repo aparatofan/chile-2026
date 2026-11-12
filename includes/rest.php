@@ -125,6 +125,16 @@ function mmcl_rest_event( WP_REST_Request $r ) {
 		}
 		$cur['status'] = $status;
 	}
+	if ( null !== $r->get_param( 'title' ) ) {
+		// Empty = back to the original name.
+		$cur['title'] = mb_substr( trim( sanitize_text_field( $r->get_param( 'title' ) ) ), 0, 200 );
+	}
+	if ( null !== $r->get_param( 'important' ) ) {
+		$cur['important'] = rest_sanitize_boolean( $r->get_param( 'important' ) );
+	}
+	if ( null !== $r->get_param( 'done' ) ) {
+		$cur['done'] = rest_sanitize_boolean( $r->get_param( 'done' ) );
+	}
 
 	$cur['by']                 = get_current_user_id();
 	$cur['at']                 = time();

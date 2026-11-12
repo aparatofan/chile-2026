@@ -103,6 +103,7 @@
 			car: '<path d="M4 16.5V12l2-5h12l2 5v4.5M4 16.5h16M3 12h18"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/>',
 			transfer: '<path d="M3 8h14l-3-3M21 16H7l3 3"/>',
 			info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+			task: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5.5"/>',
 			free: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
 			star: '<path d="M12 2l2.6 4.2 4.5-1.3-1.3 4.5L22 12l-4.2 2.6 1.3 4.5-4.5-1.3L12 22l-2.6-4.2-4.5 1.3 1.3-4.5L2 12l4.2-2.6-1.3-4.5 4.5 1.3z"/>',
 			gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
@@ -142,7 +143,11 @@
 							m[ k ] = o[ k ] === '' && k !== 'note' ? null : o[ k ];
 						}
 					} );
+					if ( typeof o.title === 'string' && o.title.trim() ) { m.title = o.title; }
+					if ( typeof o.important === 'boolean' ) { m.important = o.important; }
+					if ( typeof o.done === 'boolean' ) { m.done = o.done; }
 				}
+				m.origTitle = e.title;
 				return m;
 			} );
 		}
@@ -173,6 +178,7 @@
 
 		function statusChips( e ) {
 			var h = '';
+			if ( e.important && ! e.done ) { h += '<span class="mmcl-chip mmcl-chip--important">Ważne</span>'; }
 			if ( e.status === 'booked' ) { h += '<span class="mmcl-chip mmcl-chip--booked">Zarezerwowane</span>'; }
 			if ( e.status === 'todo' ) { h += '<span class="mmcl-chip mmcl-chip--todo">Do zarezerwowania</span>'; }
 			if ( ! e.date && ! e.arrival ) { h += '<span class="mmcl-chip mmcl-chip--tbc">Termin do ustalenia</span>'; }
@@ -181,6 +187,10 @@
 		function editBtn( e, label ) {
 			if ( ! PRIV || e.arrival ) { return ''; }
 			return '<button type="button" class="mmcl-link-btn" data-act="edit" data-id="' + esc( e.id ) + '" data-fk="edit-' + esc( e.id ) + '">' + ( label || 'Edytuj' ) + '<span class="mmcl-sr"> — ' + esc( e.title ) + '</span></button>';
+		}
+		function doneBtn( e ) {
+			if ( ! PRIV || e.type !== 'task' || e.arrival ) { return ''; }
+			return '<button type="button" class="mmcl-tick" aria-pressed="' + ( !! e.done ) + '" data-act="task-done" data-id="' + esc( e.id ) + '" data-fk="done-' + esc( e.id ) + '">' + tickSvg() + 'Zrobione<span class="mmcl-sr">: ' + esc( e.title ) + '</span></button>';
 		}
 		function linkHtml( e ) {
 			return e.link ? ' <a href="' + esc( e.link ) + '" target="_blank" rel="noopener">strona</a>' : '';
@@ -210,14 +220,15 @@
 				extra = arrWord + ' o ' + e.end_time;
 			}
 			var place = [ e.place, extra ].filter( Boolean ).join( '. ' );
-			return '<div class="mmcl-ev' + ( e.type === 'free' ? ' mmcl-ev--free' : '' ) + '" style="--stage:' + stageVar( e.stage ) + '">' +
+			var cls = ( e.type === 'free' ? ' mmcl-ev--free' : '' ) + ( e.type === 'task' ? ' mmcl-ev--task' : '' ) + ( e.done ? ' is-done' : '' ) + ( e.important && ! e.done ? ' is-important' : '' );
+			return '<div class="mmcl-ev' + cls + '" style="--stage:' + stageVar( e.stage ) + '">' +
 				'<div class="mmcl-ev__time">' + time + '</div>' +
 				'<div class="mmcl-ev__main">' +
 					'<div class="mmcl-ev__title">' + evIcon( e ) + '<span>' + esc( title ) + '</span></div>' +
 					( place ? '<div class="mmcl-ev__place">' + esc( place ) + '</div>' : '' ) +
 					( e.detail && ! e.arrival ? '<div class="mmcl-ev__detail">' + esc( e.detail ) + linkHtml( e ) + '</div>' : ( ! e.arrival && e.link ? '<div class="mmcl-ev__detail">' + linkHtml( e ) + '</div>' : '' ) ) +
 					( PRIV && e.note && ! e.arrival && ! opts.noNote ? '<div class="mmcl-ev__note">' + esc( e.note ) + '</div>' : '' ) +
-					'<div class="mmcl-ev__meta">' + ( e.arrival ? '' : statusChips( e ) + editBtn( e ) ) + '</div>' +
+					'<div class="mmcl-ev__meta">' + ( e.arrival ? '' : doneBtn( e ) + statusChips( e ) + editBtn( e ) ) + '</div>' +
 				'</div>' +
 			'</div>';
 		}
@@ -659,6 +670,8 @@
 			return '<dialog class="mmcl-dialog" aria-labelledby="mmcl-dlg-title"><form method="dialog" data-act="save-event">' +
 				'<h3 id="mmcl-dlg-title"></h3><p class="mmcl-dialog__sub" data-dlg-sub></p>' +
 				'<input type="hidden" name="id">' +
+				'<div class="mmcl-dialog__field"><label for="mmcl-d-name">Nazwa</label><input id="mmcl-d-name" type="text" name="ev_title" maxlength="200">' +
+				'<p class="mmcl-dialog__hint" data-dlg-orig></p></div>' +
 				'<div class="row"><div><label for="mmcl-d-date">Data</label><input id="mmcl-d-date" type="date" name="date" min="' + TRIP.first_day + '" max="' + TRIP.last_day + '"></div>' +
 				'<div><label for="mmcl-d-time">Godzina</label><input id="mmcl-d-time" type="time" name="time"></div></div>' +
 				'<div class="row" data-dlg-end><div><label for="mmcl-d-edate" data-dlg-end-label>Koniec — data</label><input id="mmcl-d-edate" type="date" name="end_date" min="' + TRIP.first_day + '" max="' + TRIP.last_day + '"></div>' +
@@ -666,6 +679,10 @@
 				'<fieldset data-dlg-status><legend>Status</legend>' +
 					'<label><input type="radio" name="status" value="booked"> Zarezerwowane</label>' +
 					'<label><input type="radio" name="status" value="todo"> Do zarezerwowania</label>' +
+				'</fieldset>' +
+				'<fieldset><legend>Oznaczenia</legend>' +
+					'<label><input type="checkbox" name="ev_important"> Ważne</label>' +
+					'<label data-dlg-done><input type="checkbox" name="ev_done"> Zrobione</label>' +
 				'</fieldset>' +
 				'<div><label for="mmcl-d-note">Notatka (numer rezerwacji, godzina zbiórki, kontakt)</label><textarea id="mmcl-d-note" name="note" maxlength="2000"></textarea>' +
 				'<p class="mmcl-dialog__hint">Widzą ją tylko zalogowani podróżni. Nie wpisuj numerów kart ani paszportów.</p></div>' +
@@ -797,6 +814,12 @@
 			stBox.hidden = ! e.booking;
 			Array.prototype.forEach.call( f.querySelectorAll( 'input[name=status]' ), function ( r ) { r.checked = r.value === e.status; } );
 			f.note.value = e.note || '';
+			f.elements.ev_title.value = e.title;
+			f.elements.ev_title.setAttribute( 'data-orig', e.origTitle );
+			dlg.querySelector( '[data-dlg-orig]' ).textContent = e.title !== e.origTitle ? 'Pierwotnie: ' + e.origTitle + '. Wyczyść pole, żeby przywrócić.' : '';
+			f.elements.ev_important.checked = !! e.important;
+			f.elements.ev_done.checked = !! e.done;
+			dlg.querySelector( '[data-dlg-done]' ).hidden = e.type !== 'task';
 			dlg.showModal();
 		}
 
@@ -857,6 +880,15 @@
 				openEdit( el.getAttribute( 'data-id' ) );
 				return;
 			}
+			if ( act === 'task-done' ) {
+				var tid = el.getAttribute( 'data-id' );
+				var nowDone = el.getAttribute( 'aria-pressed' ) !== 'true';
+				var before = JSON.stringify( S.state.overrides );
+				S.state.overrides[ tid ] = Object.assign( {}, S.state.overrides[ tid ], { done: nowDone } );
+				render( DYNAMIC );
+				send( 'event', { id: tid, done: nowDone }, nowDone ? 'Zrobione.' : 'Cofnięto.', function () { S.state.overrides = JSON.parse( before ); } );
+				return;
+			}
 			if ( act === 'close-dlg' ) {
 				holder.querySelector( 'dialog' ).close();
 			}
@@ -915,6 +947,11 @@
 				}
 				var checked = f.querySelector( 'input[name=status]:checked' );
 				if ( checked && ! holder.querySelector( '[data-dlg-status]' ).hidden ) { body.status = checked.value; }
+				var nameIn = f.elements.ev_title;
+				var newName = nameIn.value.trim();
+				body.title = newName === nameIn.getAttribute( 'data-orig' ) ? '' : newName;
+				body.important = f.elements.ev_important.checked;
+				if ( ! holder.querySelector( '[data-dlg-done]' ).hidden ) { body.done = f.elements.ev_done.checked; }
 				send( 'event', body, 'Zapisano.' ).then( function ( ok ) {
 					var dlg = holder.querySelector( 'dialog' );
 					if ( ok && dlg.open ) { dlg.close(); }

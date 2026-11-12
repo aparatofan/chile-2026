@@ -197,6 +197,11 @@
 .mmcl-chip--booked { color: var(--mmcl-araucaria); background: #e2ece3; }
 .mmcl-chip--todo { color: var(--mmcl-copihue); background: #f6e3e5; }
 .mmcl-chip--tbc { color: #7f5615; background: #f5ead6; }
+.mmcl-chip--important { color: var(--mmcl-white); background: var(--mmcl-copihue); }
+.mmcl-ev.is-important .mmcl-ev__title { color: var(--mmcl-copihue); }
+.mmcl-ev--task.is-done .mmcl-ev__title > span { color: var(--mmcl-muted); text-decoration: line-through; text-decoration-color: rgba(80,90,107,.45); }
+.mmcl-ev--task.is-done .mmcl-ev__icon { color: var(--mmcl-araucaria); }
+.mmcl-ev__meta .mmcl-tick { min-height: 0; padding: .1em .55em .1em .3em; }
 
 .mmcl .mmcl-link-btn { background: none; border: 0; padding: .1em .2em; font-size: var(--mmcl-t2); color: var(--mmcl-glaciar); text-decoration: underline; text-underline-offset: .2em; }
 .mmcl-link-btn:hover { color: var(--mmcl-ink); }
@@ -378,6 +383,7 @@
 .mmcl-dialog form { padding: 1.2em 1.4em 1.3em; }
 .mmcl-dialog h3 { font-family: var(--mmcl-display); font-size: var(--mmcl-t7); margin: 0 0 .1em; line-height: 1.15; }
 .mmcl-dialog__sub { color: var(--mmcl-muted); font-size: var(--mmcl-t3); margin-bottom: 1em; }
+.mmcl-dialog__field { margin-bottom: .8em; }
 .mmcl-dialog .row { display: grid; grid-template-columns: 1fr 1fr; gap: .8em; margin-bottom: .8em; }
 .mmcl-dialog label { display: block; font-size: var(--mmcl-t2); font-weight: 600; margin-bottom: .2em; }
 .mmcl-dialog input, .mmcl-dialog textarea { width: 100%; font: inherit; font-size: var(--mmcl-t4); padding: .4em .55em; border: 1px solid var(--mmcl-line); border-radius: 6px; background: var(--mmcl-white); color: var(--mmcl-ink); }

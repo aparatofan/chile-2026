@@ -10,10 +10,11 @@
  *
  * Event fields:
  *   id, stage, date (Y-m-d|null), time (H:i|null), end_date, end_time,
- *   type (flight|bus|stay|activity|car|transfer|info|free),
+ *   type (flight|bus|stay|activity|car|transfer|info|task|free),
  *   title, title_public (shown to visitors when title has a placeholder),
  *   place, detail, note (private default), status (booked|todo|''),
- *   booking (true = belongs to the "Do zarezerwowania" list), link.
+ *   booking (true = belongs to the "Do zarezerwowania" list), link,
+ *   important (true = "Ważne" chip). type task = a to-do in the plan that can be ticked off.
  *
  * @package MM_Chile_2026
  */
@@ -91,6 +92,12 @@ function mmcl_events() {
 			'place' => 'Santiago', 'detail' => '', 'status' => 'booked', 'booking' => false,
 		),
 		array(
+			'id' => 'betel', 'stage' => 'santiago', 'type' => 'task',
+			'date' => '2026-12-22', 'time' => null,
+			'title' => 'Wizyta w Betel', 'place' => '', 'detail' => '',
+			'status' => '', 'booking' => false,
+		),
+		array(
 			'id' => 'jac', 'stage' => 'santiago', 'type' => 'bus',
 			'date' => '2026-12-23', 'time' => '22:20', 'end_date' => '2026-12-24', 'end_time' => null,
 			'title' => 'Nocny autobus do Pucón', 'place' => 'Terminal Sur → Pucón Terminal JAC',
@@ -118,6 +125,13 @@ function mmcl_events() {
 			'detail' => 'Jaskinie wulkaniczne. Spokojny dzień przyjazdu.', 'status' => 'todo', 'booking' => true,
 		),
 		array(
+			'id' => 'zakupy-2412', 'stage' => 'pucon', 'type' => 'task',
+			'date' => '2026-12-24', 'time' => null,
+			'title' => 'Zrobić zakupy', 'place' => '', 'detail' => '25 grudnia sklepy są zamknięte.',
+			'status' => '', 'booking' => false,
+			'important' => true,
+		),
+		array(
 			'id' => 'cani', 'stage' => 'pucon', 'type' => 'activity',
 			'date' => '2026-12-25', 'time' => null,
 			'title' => 'Santuario El Cañi', 'place' => 'Mirador Melidekiñ',
@@ -135,6 +149,12 @@ function mmcl_events() {
 			'date' => '2026-12-27', 'time' => null,
 			'title' => 'Termas Martini', 'place' => 'Dawniej Termas Geométricas, ok. 2 h od Pucón',
 			'detail' => 'Gorące źródła w lesie. Rezerwacja z wyprzedzeniem.', 'status' => 'todo', 'booking' => true,
+		),
+		array(
+			'id' => 'przymiarka', 'stage' => 'pucon', 'type' => 'task',
+			'date' => '2026-12-27', 'time' => null,
+			'title' => 'Przymiarka ubrań do wejścia na wulkan', 'place' => '', 'detail' => 'Jutro wulkan Villarrica.',
+			'status' => '', 'booking' => false,
 		),
 		array(
 			'id' => 'wulkan', 'stage' => 'pucon', 'type' => 'activity',
@@ -156,6 +176,13 @@ function mmcl_events() {
 			'title' => 'Nocleg w Puerto Montt', 'place' => 'Puerto Montt', 'detail' => '',
 			'status' => 'booked', 'booking' => true,
 		),
+		array(
+			'id' => 'odprawa-pmc', 'stage' => 'pucon', 'type' => 'task',
+			'date' => '2026-12-29', 'time' => null,
+			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Puerto Montt → Puerto Natales, 30 grudnia.',
+			'status' => '', 'booking' => false,
+			'important' => true,
+		),
 
 		// ——— Patagonia ———
 		array(
@@ -169,6 +196,13 @@ function mmcl_events() {
 			'date' => '2026-12-30', 'time' => null, 'end_date' => '2027-01-04', 'end_time' => null,
 			'title' => 'Nocleg w Puerto Natales', 'place' => 'Puerto Natales', 'detail' => '5 nocy',
 			'status' => 'todo', 'booking' => true,
+		),
+		array(
+			'id' => 'zakupy-3012', 'stage' => 'patagonia', 'type' => 'task',
+			'date' => '2026-12-30', 'time' => null,
+			'title' => 'Zrobić zakupy', 'place' => '', 'detail' => 'Na Sylwestra i Nowy Rok — 1 stycznia sklepy są zamknięte.',
+			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 		array(
 			'id' => 'tdp-bilety', 'stage' => 'patagonia', 'type' => 'info',
@@ -186,7 +220,7 @@ function mmcl_events() {
 		array(
 			'id' => 'sylwester', 'stage' => 'patagonia', 'type' => 'info',
 			'date' => '2026-12-31', 'time' => null,
-			'title' => 'Sylwester w Puerto Natales', 'place' => '', 'detail' => 'Zakupy dziś — 1 stycznia sklepy są zamknięte.',
+			'title' => 'Sylwester w Puerto Natales', 'place' => '', 'detail' => '',
 			'status' => '', 'booking' => false,
 		),
 		array(
@@ -207,6 +241,12 @@ function mmcl_events() {
 			'status' => 'todo', 'booking' => true,
 		),
 		array(
+			'id' => 'odprawa-pnt', 'stage' => 'patagonia', 'type' => 'task',
+			'date' => '2027-01-03', 'time' => null,
+			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Puerto Natales → Santiago, 4 stycznia.',
+			'status' => '', 'booking' => false,
+		),
+		array(
 			'id' => 'lot-pnt-scl', 'stage' => 'patagonia', 'type' => 'flight',
 			'date' => '2027-01-04', 'time' => null,
 			'title' => 'Puerto Natales → Santiago', 'place' => 'PNT → SCL', 'detail' => '',
@@ -217,6 +257,12 @@ function mmcl_events() {
 			'date' => '2027-01-04', 'time' => null, 'end_date' => '2027-01-05', 'end_time' => null,
 			'title' => 'Nocleg w Santiago', 'place' => 'Santiago', 'detail' => 'Do ustalenia',
 			'status' => 'todo', 'booking' => true,
+		),
+		array(
+			'id' => 'odprawa-scl-cjc', 'stage' => 'patagonia', 'type' => 'task',
+			'date' => '2027-01-04', 'time' => null,
+			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Santiago → Calama, 5 stycznia.',
+			'status' => '', 'booking' => false,
 		),
 
 		// ——— Atacama ———
@@ -271,6 +317,12 @@ function mmcl_events() {
 			'detail' => 'Nów księżyca wypada 8 stycznia — niebo będzie wyjątkowo ciemne.', 'status' => 'booked', 'booking' => true,
 		),
 		array(
+			'id' => 'odprawa-cjc', 'stage' => 'atacama', 'type' => 'task',
+			'date' => '2027-01-10', 'time' => null,
+			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Calama → Santiago, 11 stycznia.',
+			'status' => '', 'booking' => false,
+		),
+		array(
 			'id' => 'transfer-powrot', 'stage' => 'atacama', 'type' => 'transfer',
 			'date' => '2027-01-11', 'time' => null,
 			'title' => 'Transfer San Pedro → Calama', 'place' => '', 'detail' => 'Dopasować do godziny wylotu.',
@@ -291,16 +343,16 @@ function mmcl_events() {
 
 		// ——— Ocean ———
 		array(
-			'id' => 'bus-vina', 'stage' => 'ocean', 'type' => 'bus',
-			'date' => '2027-01-12', 'time' => null,
-			'title' => 'Autobus Santiago → Viña del Mar', 'place' => 'Ok. 1,5 h', 'detail' => '',
-			'status' => 'todo', 'booking' => true,
-		),
-		array(
 			'id' => 'nocleg-vina', 'stage' => 'ocean', 'type' => 'stay',
 			'date' => '2027-01-12', 'time' => null, 'end_date' => '2027-01-15', 'end_time' => null,
 			'title' => 'Nocleg w Viña del Mar', 'place' => 'Viña del Mar', 'detail' => '3 noce',
 			'status' => 'todo', 'booking' => true,
+		),
+		array(
+			'id' => 'odprawa-waw', 'stage' => 'ocean', 'type' => 'task',
+			'date' => '2027-01-15', 'time' => null,
+			'title' => 'Odprawa przed wylotem do Warszawy', 'place' => '', 'detail' => 'Turkish Airlines, SCL → WAW, 16 stycznia o 11:45.',
+			'status' => '', 'booking' => false,
 		),
 		array(
 			'id' => 'valpo', 'stage' => 'ocean', 'type' => 'activity', 'date' => null, 'time' => null,
@@ -385,7 +437,7 @@ function mmcl_checklist_items() {
 
 		// Patagonia.
 		array( 'id' => 'sylwester-kolacja','cat' => 'patagonia', 'scope' => $s, 'label' => 'Kolacja sylwestrowa w Puerto Natales — rezerwacja', 'hint' => 'Po całym dniu na szlaku do Base de las Torres.' ),
-		array( 'id' => 'zakupy-sylwester','cat' => 'patagonia', 'scope' => $s, 'label' => 'Zakupy 31.12', 'hint' => '1 stycznia sklepy są zamknięte.' ),
+		array( 'id' => 'zakupy-sylwester','cat' => 'patagonia', 'scope' => $s, 'label' => 'Zakupy 30.12', 'hint' => '1 stycznia sklepy są zamknięte.' ),
 		array( 'id' => 'wiatr',         'cat' => 'patagonia', 'scope' => $s, 'label' => 'Prognoza wiatru przed każdym dniem w parku', 'link' => 'https://www.windy.com' ),
 		array( 'id' => 'prowiant',      'cat' => 'patagonia', 'scope' => $s, 'label' => 'Prowiant i woda na Base de las Torres', 'hint' => 'Ok. 20 km, 8–10 h marszu.' ),
 

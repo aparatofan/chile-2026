@@ -9,7 +9,7 @@ Santiago, Pucón, Patagonia, Atacama i Viña del Mar.
 - **Trasa** z północy na południe, z przejazdami w kolejności (lot / autobus).
 - **Co dalej** — najbliższe punkty planu, zegar Santiago i Warszawy, przelicznik złotych na peso.
 - **Do zarezerwowania** — wszystko, czego jeszcze brakuje, z przyciskiem „Zarezerwowane”.
-- **Plan dzień po dniu** z etapami, noclegami i wycieczkami. Daty, godziny, statusy i notatki można edytować na panelu.
+- **Plan dzień po dniu** z etapami, noclegami, wycieczkami i zadaniami (zakupy, odprawy). Nazwę, datę, godzinę, status, oznaczenie „Ważne” i notatkę każdego punktu można zmienić przyciskiem „Edytuj”, a zadania odhaczyć jako zrobione. Zadania widzą tylko podróżni.
 - **Loty i przejazdy**, z limitami bagażu Turkish Airlines.
 - **Lista** w siedmiu kategoriach. Większość punktów odhacza się raz za oboje, a osobiste (paszport, ubezpieczenie, deklaracja SAG) każde osobno. Można dodawać własne punkty.
 - **Na miejscu** (numery alarmowe, ambasada, święta), **aplikacje** i **kontakty**.

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Chile 2026 — panel podróży
  * Description:       Panel przygotowań do wyprawy do Chile (grudzień 2026 – styczeń 2027): odliczanie, trasa, plan dzień po dniu, rezerwacje, loty i wspólna lista kontrolna. Shortcode: [chile-dashboard].
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Mariusz Mirecki
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MMCL_VERSION', '1.0.0' );
+define( 'MMCL_VERSION', '1.1.0' );
 define( 'MMCL_FILE', __FILE__ );
 define( 'MMCL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MMCL_URL', plugin_dir_url( __FILE__ ) );

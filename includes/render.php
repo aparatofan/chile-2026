@@ -53,11 +53,16 @@ function mmcl_fill_public( $text ) {
 function mmcl_payload_events( $private ) {
 	$out = array();
 	foreach ( mmcl_events() as $e ) {
+		// Tasks (shopping, check-in, …) are the travellers' own to-dos: never shown to guests.
+		if ( ! $private && 'task' === $e['type'] ) {
+			continue;
+		}
 		$e = wp_parse_args( $e, array(
 			'date' => null, 'time' => null, 'end_date' => null, 'end_time' => null,
 			'title_public' => '', 'place' => '', 'detail' => '', 'note' => '',
-			'status' => '', 'booking' => false, 'link' => '',
+			'status' => '', 'booking' => false, 'link' => '', 'important' => false,
 		) );
+		$e['important'] = (bool) $e['important'];
 		if ( $private ) {
 			$e['title']  = mmcl_fill( $e['title'] );
 			$e['detail'] = mmcl_fill( $e['detail'] );
