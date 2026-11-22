@@ -200,6 +200,14 @@
 .mmcl-chip--important { color: var(--mmcl-white); background: var(--mmcl-copihue); }
 .mmcl-ev--task.is-done .mmcl-ev__title > span { color: var(--mmcl-muted); text-decoration: line-through; text-decoration-color: rgba(80,90,107,.45); }
 .mmcl-ev__meta .mmcl-tick { min-height: 0; padding: .1em .55em .1em .3em; }
+/* Plan tasks: a solid button that stands out until the task is done. */
+.mmcl .mmcl-ev__meta .mmcl-tick[aria-pressed="false"] {
+	background: var(--mmcl-ink); border-color: var(--mmcl-ink); color: var(--mmcl-white);
+	font-weight: 700; padding: .2em .75em .2em .45em; box-shadow: 0 1px 3px rgba(25,35,58,.25); cursor: pointer;
+}
+.mmcl .mmcl-ev__meta .mmcl-tick[aria-pressed="false"] .box { stroke: var(--mmcl-white); fill: none; }
+.mmcl .mmcl-ev__meta .mmcl-tick[aria-pressed="false"]:hover { background: var(--mmcl-ink-2); border-color: var(--mmcl-ink-2); }
+.mmcl .mmcl-ev__meta .mmcl-tick[aria-pressed="true"] { font-weight: 700; padding: .2em .75em .2em .45em; }
 
 .mmcl .mmcl-link-btn { background: none; border: 0; padding: .1em .2em; font-size: var(--mmcl-t2); color: var(--mmcl-glaciar); text-decoration: underline; text-underline-offset: .2em; }
 .mmcl-link-btn:hover { color: var(--mmcl-ink); }

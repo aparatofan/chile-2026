@@ -155,6 +155,7 @@ function mmcl_events() {
 			'date' => '2026-12-27', 'time' => null,
 			'title' => 'Przymiarka ubrań do wejścia na wulkan', 'place' => '', 'detail' => 'Jutro wulkan Villarrica.',
 			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 		array(
 			'id' => 'wulkan', 'stage' => 'pucon', 'type' => 'activity',
@@ -245,6 +246,7 @@ function mmcl_events() {
 			'date' => '2027-01-03', 'time' => null,
 			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Puerto Natales → Santiago, 4 stycznia.',
 			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 		array(
 			'id' => 'lot-pnt-scl', 'stage' => 'patagonia', 'type' => 'flight',
@@ -263,6 +265,7 @@ function mmcl_events() {
 			'date' => '2027-01-04', 'time' => null,
 			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Santiago → Calama, 5 stycznia.',
 			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 
 		// ——— Atacama ———
@@ -321,12 +324,14 @@ function mmcl_events() {
 			'date' => '2027-01-10', 'time' => null,
 			'title' => 'Zrobić odprawę przed wylotem', 'place' => '', 'detail' => 'Lot Calama → Santiago, 11 stycznia.',
 			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 		array(
 			'id' => 'transfer-powrot', 'stage' => 'atacama', 'type' => 'transfer',
 			'date' => '2027-01-11', 'time' => null,
-			'title' => 'Transfer San Pedro → Calama', 'place' => '', 'detail' => 'Dopasować do godziny wylotu.',
-			'status' => 'todo', 'booking' => true, 'link' => 'https://transferaltiplanico.cl/en/#cotizar',
+			'title' => 'Transfer San Pedro → Calama', 'place' => 'Ok. 1,5 h',
+			'detail' => 'Dopasować do godziny wylotu. Polecana agencja: Transfer Altiplánico.', 'status' => 'todo', 'booking' => true,
+			'link' => 'https://transferaltiplanico.cl/en/#cotizar',
 		),
 		array(
 			'id' => 'lot-cjc-scl', 'stage' => 'atacama', 'type' => 'flight',
@@ -353,6 +358,7 @@ function mmcl_events() {
 			'date' => '2027-01-15', 'time' => null,
 			'title' => 'Odprawa przed wylotem do Warszawy', 'place' => '', 'detail' => 'Turkish Airlines, SCL → WAW, 16 stycznia o 11:45.',
 			'status' => '', 'booking' => false,
+			'important' => true,
 		),
 		array(
 			'id' => 'valpo', 'stage' => 'ocean', 'type' => 'activity', 'date' => null, 'time' => null,

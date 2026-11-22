@@ -177,3 +177,30 @@ function mmcl_clean_time( $v ) {
 	}
 	return preg_match( '/^([01]\d|2[0-3]):[0-5]\d$/', $v ) ? $v : null;
 }
+
+/**
+ * One-off data upgrades, run once per version bump.
+ *
+ * 1.2.0: Ania asked for "Ważne" on five tasks. Saving a task in the edit
+ * window stores important = false, which would hide the new default, so
+ * drop that stored "false" for those tasks only.
+ */
+function mmcl_maybe_upgrade() {
+	$done = get_option( 'mmcl_db_version', '0' );
+	if ( version_compare( $done, '1.2.0', '>=' ) ) {
+		return;
+	}
+	$state   = mmcl_state();
+	$changed = false;
+	foreach ( array( 'przymiarka', 'odprawa-pnt', 'odprawa-scl-cjc', 'odprawa-cjc', 'odprawa-waw' ) as $id ) {
+		if ( isset( $state['overrides'][ $id ]['important'] ) && false === $state['overrides'][ $id ]['important'] ) {
+			unset( $state['overrides'][ $id ]['important'] );
+			$changed = true;
+		}
+	}
+	if ( $changed ) {
+		mmcl_save_state( $state );
+	}
+	update_option( 'mmcl_db_version', '1.2.0', false );
+}
+add_action( 'init', 'mmcl_maybe_upgrade' );
